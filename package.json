@@ -1,0 +1,17 @@
+{
+  "name": "ai-proxy-serverless",
+  "version": "1.0.0",
+  "description": "A simple serverless proxy for Aliyun Qwen API.",
+  "main": "api/qwen_proxy.js",
+  "scripts": {
+    "start": "echo 'No start script needed for Vercel functions.'"
+  },
+  "keywords": [
+    "vercel",
+    "serverless",
+    "qwen"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
