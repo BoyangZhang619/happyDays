@@ -48,6 +48,11 @@ const decorationNames = {
 
 // 选择语言
 function selectLanguage(element) {
+    // 在移动端检查是否为有效点击
+    if ('ontouchstart' in window && isTouchMoving) {
+        return;
+    }
+    
     // 移除所有语言项的选中状态
     document.querySelectorAll('.language-item').forEach(item => {
         item.classList.remove('selected');
@@ -71,6 +76,11 @@ function getQuantityByClickCount(clickCount) {
 
 // 切换装饰品选择状态
 function toggleDecoration(element) {
+    // 在移动端检查是否为有效点击
+    if ('ontouchstart' in window && isTouchMoving) {
+        return;
+    }
+    
     const type = element.dataset.type;
     const countElement = element.querySelector('.count');
     
@@ -102,6 +112,11 @@ function toggleDecoration(element) {
 
 // 生成圣诞祝福语
 async function generateBlessing() {
+    // 在移动端检查是否为有效点击
+    if ('ontouchstart' in window && isTouchMoving) {
+        return;
+    }
+    
     const outputDiv = document.getElementById("modelOutput");
     const generateButton = document.getElementById("generateButton");
     
@@ -245,12 +260,168 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // 添加移动端触摸优化
 document.addEventListener('touchstart', function() {}, {passive: true});
+
+// 智能触摸处理 - 区分点击和滑动
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
+let isTouchMoving = false;
+
+document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+    isTouchMoving = false;
+}, {passive: true});
+
 document.addEventListener('touchmove', function(e) {
-    // 防止页面滚动时的意外操作
-    if (e.target.closest('.decoration-item') || e.target.closest('.language-item')) {
-        e.preventDefault();
+    if (!touchStartTime) return;
+    
+    const touchCurrentX = e.touches[0].clientX;
+    const touchCurrentY = e.touches[0].clientY;
+    const deltaX = Math.abs(touchCurrentX - touchStartX);
+    const deltaY = Math.abs(touchCurrentY - touchStartY);
+    const moveThreshold = 10; // 移动阈值，超过这个值认为是滑动
+    
+    // 如果移动距离超过阈值，标记为滑动
+    if (deltaX > moveThreshold || deltaY > moveThreshold) {
+        isTouchMoving = true;
     }
-}, {passive: false});
+}, {passive: true});
+
+document.addEventListener('touchend', function(e) {
+    const touchEndTime = Date.now();
+    const touchDuration = touchEndTime - touchStartTime;
+    const maxClickDuration = 300; // 最大点击时长（毫秒）
+    
+    // 重置触摸状态
+    setTimeout(() => {
+        isTouchMoving = false;
+        touchStartTime = 0;
+    }, 50);
+}, {passive: true});
+
+// 重写装饰品点击处理
+function handleDecorationTouch(element, originalHandler) {
+    return function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // 如果是滑动手势，不触发点击
+        if (isTouchMoving) {
+            return false;
+        }
+        
+        // 检查触摸时长，短时间触摸才认为是点击
+        const touchDuration = Date.now() - touchStartTime;
+        if (touchDuration > 300) {
+            return false;
+        }
+        
+        // 执行原始点击处理
+        originalHandler.call(this, e);
+        return false;
+    };
+}
+
+// 增强的切换装饰品选择状态
+const originalToggleDecoration = toggleDecoration;
+function toggleDecoration(element) {
+    // 在移动端检查是否为有效点击
+    if ('ontouchstart' in window) {
+        if (isTouchMoving) {
+            return;
+        }
+    }
+    
+    // 调用原始函数
+    originalToggleDecoration(element);
+}
+
+// 增强的语言选择
+const originalSelectLanguage = selectLanguage;
+function selectLanguage(element) {
+    // 在移动端检查是否为有效点击
+    if ('ontouchstart' in window) {
+        if (isTouchMoving) {
+            return;
+        }
+    }
+    
+    // 调用原始函数
+    originalSelectLanguage(element);
+}
+
+// 增强的生成祝福语按钮
+const originalGenerateBlessing = generateBlessing;
+async function generateBlessing() {
+    // 在移动端检查是否为有效点击
+    if ('ontouchstart' in window) {
+        if (isTouchMoving) {
+            return;
+        }
+    }
+    
+    // 调用原始函数
+    await originalGenerateBlessing();
+}
+
+// 页面加载完成后添加触摸事件监听
+window.addEventListener('DOMContentLoaded', () => {
+    // 为所有可点击元素添加触摸优化
+    const clickableElements = document.querySelectorAll('.decoration-item, .language-item, #generateButton');
+    
+    clickableElements.forEach(element => {
+        // 添加触摸反馈
+        element.addEventListener('touchstart', function() {
+            this.style.opacity = '0.8';
+        }, {passive: true});
+        
+        element.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.opacity = '';
+            }, 150);
+        }, {passive: true});
+        
+        // 添加触摸取消事件
+        element.addEventListener('touchcancel', function() {
+            this.style.opacity = '';
+        }, {passive: true});
+    });
+    
+    // 为容器添加滑动区域指示
+    const container = document.querySelector('.container');
+    if (container && 'ontouchstart' in window) {
+        // 在空白区域添加滑动提示（仅在移动端）
+        const scrollHint = document.createElement('div');
+        scrollHint.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 1000;
+            opacity: 0.8;
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+        `;
+        scrollHint.textContent = '💡 在装饰品上滑动即可滚动页面';
+        document.body.appendChild(scrollHint);
+        
+        // 3秒后隐藏提示
+        setTimeout(() => {
+            scrollHint.style.transition = 'opacity 1s';
+            scrollHint.style.opacity = '0';
+            setTimeout(() => {
+                scrollHint.remove();
+            }, 1000);
+        }, 3000);
+    }
+});
 
 // 添加键盘快捷键支持
 document.addEventListener('keydown', (e) => {
