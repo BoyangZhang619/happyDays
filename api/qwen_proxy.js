@@ -4,7 +4,7 @@
 // 假设您在部署平台中设置了此环境变量
 const API_KEY = process.env.ALIYUN_QWEN_API_KEY; 
 const QWEN_MODEL_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
-const ALLOWED_ORIGIN = 'https://boyangzhang619.github.io'; // 生产环境请替换为您的 GitHub Pages 域名，例如: 'https://username.github.io'
+const ALLOWED_ORIGIN = 'https://zbyblq.xin'; // 生产环境请替换为您的 GitHub Pages 域名，例如: 'https://username.github.io'
 
 // 导出 Serverless 函数的主处理器
 export default async function handler(req, res) {
