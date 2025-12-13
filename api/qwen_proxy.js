@@ -44,14 +44,13 @@ export default async function handler(req, res) {
 
         // 2. 构造通义千问的请求体
         const payload = {
-            model: "qwen-plus", // 推荐使用免费额度较高的模型
-            input: {
-                messages: [{ role: "user", content: message }]
-            },
-            parameters: {
-                temperature: 0.8
-            }
-        };
+    // 兼容模式下，将 model 放在顶层
+    model: "qwen-plus", // 确保您有这个模型的额度，否则改为 'qwen-plus'
+    messages: [
+        { role: "user", content: message }
+    ],
+    temperature: 0.8 // 将参数也放在顶层
+};
 
         // 3. 发起 API 调用
         const modelResponse = await fetch(QWEN_MODEL_URL, {
