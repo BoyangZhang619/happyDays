@@ -186,14 +186,14 @@ async function generateBlessing() {
         const data = await response.json();
 
         if (response.ok && data.reply) {
-            outputDiv.innerHTML = `🧧 ${data.reply} �`;
+            outputDiv.innerHTML = `🧧 ${data.reply} 🐴`;
         } else {
-            outputDiv.innerHTML = "� 抱歉，财神爷暂时忙碌中，请稍后再试... 🧧";
+            outputDiv.innerHTML = "🐴 抱歉，财神爷暂时忙碌中，请稍后再试... 🧧";
         }
 
     } catch (error) {
         console.error("生成祝福语时出错:", error);
-        outputDiv.innerHTML = "🎆 网络连接似乎有些问题，祝福传递被烟花阻挡了... 请稍后重试！ �";
+        outputDiv.innerHTML = "🎆 网络连接似乎有些问题，祝福传递被烟花阻挡了... 请稍后重试！ 🐴";
     } finally {
         generateButton.disabled = false;
     }
