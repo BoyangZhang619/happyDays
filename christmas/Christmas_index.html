@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>🎄 圣诞祝福生成器 🎅</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+    <!-- 雪花容器 -->
+    <div id="snowContainer"></div>
+    
+    <div class="container">
+        <h1>🎄 <span>圣诞祝福生成器</span> 🎅</h1>
+
+        <!-- 圣诞装饰品选择区域 -->
+        <div class="decorations-section">
+            <h2 class="section-title">✨ 选择您喜爱的圣诞装饰 ✨</h2>
+            <p style="text-align: center; color: #ffffff; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);">点击装饰品来选择它们（可多选），然后生成专属圣诞祝福语！</p>
+            
+            <!-- 语言选择区域 -->
+            <div class="language-selection">
+                <h3 class="language-title">🌍 选择祝福语言 🌍</h3>
+                <div class="language-grid">
+                    <div class="language-item selected" data-language="zh" onclick="selectLanguage(this)">
+                        <span class="flag">𝗖𝗡</span>
+                        <div class="language-name">中文</div>
+                    </div>
+                    <div class="language-item" data-language="en" onclick="selectLanguage(this)">
+                        <span class="flag">𝗨𝗦</span>
+                        <div class="language-name">English</div>
+                    </div>
+                    <div class="language-item" data-language="fr" onclick="selectLanguage(this)">
+                        <span class="flag">𝗙𝗥</span>
+                        <div class="language-name">Français</div>
+                    </div>
+                    <div class="language-item" data-language="ja" onclick="selectLanguage(this)">
+                        <span class="flag">𝗝𝗣</span>
+                        <div class="language-name">日本語</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="decorations-grid" id="decorationsGrid">
+                <div class="decoration-item" data-type="tree" onclick="toggleDecoration(this)">
+                    <span class="icon">🎄</span>
+                    <div class="name">圣诞树</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="gift" onclick="toggleDecoration(this)">
+                    <span class="icon">🎁</span>
+                    <div class="name">礼品盒</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="candy" onclick="toggleDecoration(this)">
+                    <span class="icon">🍭</span>
+                    <div class="name">拐杖糖</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="sock" onclick="toggleDecoration(this)">
+                    <span class="icon">🧦</span>
+                    <div class="name">圣诞袜</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="hat" onclick="toggleDecoration(this)">
+                    <span class="icon">🎅</span>
+                    <div class="name">圣诞帽</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="bell" onclick="toggleDecoration(this)">
+                    <span class="icon">🔔</span>
+                    <div class="name">铃铛</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="star" onclick="toggleDecoration(this)">
+                    <span class="icon">⭐</span>
+                    <div class="name">星星</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="snowman" onclick="toggleDecoration(this)">
+                    <span class="icon">⛄</span>
+                    <div class="name">雪人</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="angel" onclick="toggleDecoration(this)">
+                    <span class="icon">👼</span>
+                    <div class="name">天使</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="candle" onclick="toggleDecoration(this)">
+                    <span class="icon">🕯️</span>
+                    <div class="name">蜡烛</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="wreath" onclick="toggleDecoration(this)">
+                    <span class="icon">🎀</span>
+                    <div class="name">花环</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="cookie" onclick="toggleDecoration(this)">
+                    <span class="icon">🍪</span>
+                    <div class="name">姜饼</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="reindeer" onclick="toggleDecoration(this)">
+                    <span class="icon">🦌</span>
+                    <div class="name">驯鹿</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="sledge" onclick="toggleDecoration(this)">
+                    <span class="icon">🛷</span>
+                    <div class="name">雪橇</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="mittens" onclick="toggleDecoration(this)">
+                    <span class="icon">🧤</span>
+                    <div class="name">手套</div>
+                    <div class="count">已选: 0</div>
+                </div>
+                <div class="decoration-item" data-type="scarf" onclick="toggleDecoration(this)">
+                    <span class="icon">🧣</span>
+                    <div class="name">围巾</div>
+                    <div class="count">已选: 0</div>
+                </div>
+            </div>
+            
+            <div class="generate-section">
+                <button id="generateButton" onclick="generateBlessing()">🎅 生成圣诞祝福语 🎄</button>
+            </div>
+        </div>
+        
+        <!-- 祝福语显示区域 -->
+        <div class="blessing-section">
+            <h2 class="section-title">🎁 您的专属圣诞祝福 🎁</h2>
+            <div id="modelOutput">🎄 请选择您喜爱的圣诞装饰，然后点击生成按钮获取专属祝福语... ✨</div>
+        </div>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+</html>
