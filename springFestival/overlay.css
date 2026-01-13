@@ -1,0 +1,52 @@
+/* pageMask.css */
+
+.pm-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* overlay current page mode: just overlay, no iframe */
+.pm-root.pm-overlay-mode {
+  pointer-events: none; /* root itself doesn't block */
+}
+
+/* iframe occupies full screen */
+.pm-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+/* overlay layer (mask + canvas) */
+.pm-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  /* default mask look (you can override by setMaskColor) */
+  background: rgba(0, 0, 0, 0);
+
+  /* optional: make mask feel nicer (can delete if you dislike) */
+  backdrop-filter: blur(0px);
+
+  /* pointer-events controlled by JS option */
+}
+
+/* canvas is where effects are rendered */
+.pm-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  /* keep overlay purely visual by default */
+  pointer-events: none;
+}

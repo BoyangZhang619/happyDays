@@ -1,141 +1,91 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>🧧 春节祝福生成器 🐴</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <link rel="stylesheet" href="./springFestival/main.css">
+  <meta charset="UTF-8" />
+  <title>🧧 春节祝福𝐺𝐸𝑁𝐸𝑅𝐴𝑇𝑂𝑅 🐴</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <link rel="stylesheet" href="./springFestival/main.css" />
+  <link rel="stylesheet" href="./springFestival/overlay.css">
 </head>
+
 <body>
-    <!-- 烟花/红包容器 -->
-    <div id="fireworkContainer"></div>
-    
-    <div class="container">
-        <h1>🧧 <span>春节祝福生成器</span> 🐴</h1>
+  <!-- 烟花/飘落特效层（保留） -->
+  <div id="fireworkContainer" aria-hidden="true"></div>
 
-        <!-- 春节装饰品选择区域 -->
-        <div class="decorations-section">
-            <h2 class="section-title">✨ 选择您喜爱的春节元素 ✨</h2>
-            <p style="text-align: center; color: #ffffff; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);">点击春节元素来选择它们（可多选），然后生成专属新年祝福语！</p>
-            
-            <!-- 语言选择区域 -->
-            <div class="language-selection">
-                <h3 class="language-title">🌍 选择祝福语言 🌍</h3>
-                <div class="language-grid">
-                    <div class="language-item selected" data-language="zh" onclick="selectLanguage(this)">
-                        <span class="flag">🇨🇳</span>
-                        <div class="language-name">中文</div>
-                    </div>
-                    <div class="language-item" data-language="en" onclick="selectLanguage(this)">
-                        <span class="flag">🇺🇸</span>
-                        <div class="language-name">English</div>
-                    </div>
-                    <div class="language-item" data-language="ja" onclick="selectLanguage(this)">
-                        <span class="flag">🇯🇵</span>
-                        <div class="language-name">日本語</div>
-                    </div>
-                    <div class="language-item" data-language="ko" onclick="selectLanguage(this)">
-                        <span class="flag">🇰🇷</span>
-                        <div class="language-name">한국어</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="decorations-grid" id="decorationsGrid">
-                <div class="decoration-item" data-type="redEnvelope" onclick="toggleDecoration(this)">
-                    <span class="icon">🧧</span>
-                    <div class="name">红包</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="lantern" onclick="toggleDecoration(this)">
-                    <span class="icon">🏮</span>
-                    <div class="name">灯笼</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="firecracker" onclick="toggleDecoration(this)">
-                    <span class="icon">🧨</span>
-                    <div class="name">鞭炮</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="firework" onclick="toggleDecoration(this)">
-                    <span class="icon">🎆</span>
-                    <div class="name">烟花</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="horse" onclick="toggleDecoration(this)">
-                    <span class="icon">🐴</span>
-                    <div class="name">马年</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="dragon" onclick="toggleDecoration(this)">
-                    <span class="icon">🐉</span>
-                    <div class="name">神龙</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="dumpling" onclick="toggleDecoration(this)">
-                    <span class="icon">🥟</span>
-                    <div class="name">饺子</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="tangyuan" onclick="toggleDecoration(this)">
-                    <span class="icon">🍡</span>
-                    <div class="name">汤圆</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="fish" onclick="toggleDecoration(this)">
-                    <span class="icon">🐟</span>
-                    <div class="name">年年有鱼</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="gold" onclick="toggleDecoration(this)">
-                    <span class="icon">🏆</span>
-                    <div class="name">金元宝</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="fortune" onclick="toggleDecoration(this)">
-                    <span class="icon">🎊</span>
-                    <div class="name">福字</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="couplet" onclick="toggleDecoration(this)">
-                    <span class="icon">📜</span>
-                    <div class="name">春联</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="plumBlossom" onclick="toggleDecoration(this)">
-                    <span class="icon">🌸</span>
-                    <div class="name">梅花</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="peach" onclick="toggleDecoration(this)">
-                    <span class="icon">🍑</span>
-                    <div class="name">桃花</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="tea" onclick="toggleDecoration(this)">
-                    <span class="icon">🍵</span>
-                    <div class="name">茶香</div>
-                    <div class="count">已选: 0</div>
-                </div>
-                <div class="decoration-item" data-type="family" onclick="toggleDecoration(this)">
-                    <span class="icon">👨‍👩‍👧‍👦</span>
-                    <div class="name">团圆</div>
-                    <div class="count">已选: 0</div>
-                </div>
-            </div>
-            
-            <div class="generate-section">
-                <button id="generateButton" onclick="generateBlessing()">🧧 生成新年祝福语 🎊</button>
-            </div>
-        </div>
-        
-        <!-- 祝福语显示区域 -->
-        <div class="blessing-section">
-            <h2 class="section-title">🎊 您的专属新年祝福 🎊</h2>
-            <div id="modelOutput">🧧 请选择您喜爱的春节元素，然后点击生成按钮获取专属祝福语... ✨</div>
-        </div>
-    </div>
+  <div class="container">
+    <header class="hero">
+      <div class="badge">2026 · 马年</div>
+      <h1 class="title">🧧 春节祝福𝐺𝐸𝑁𝐸𝑅𝐴𝑇𝑂𝑅 🐴</h1>
+      <p class="subtitle">在场景里捡到的元素，会进入背包统计。捡够了就生成专属祝福！</p>
+    </header>
 
-    <script src="./springFestival/main.js"></script>
+    <!-- 拾取场景 -->
+    <section class="sceneWrap">
+      <div class="sceneHead">
+        <div class="sceneHint">🎮 点击物件拾取（点一个捡一个）</div>
+        <div class="sceneActions">
+          <button class="ghostBtn" id="undoBtn" type="button">撤销</button>
+          <button class="ghostBtn" id="clearBtn" type="button">清空</button>
+          <button class="ghostBtn" id="respawnBtn" type="button">重撒</button>
+        </div>
+      </div>
+
+      <div id="playground" class="playground" aria-label="拾取场景"></div>
+    </section>
+
+    <!-- HUD：语言 + 背包 + 生成 -->
+    <section class="hud">
+      <div class="hudRow">
+        <div class="hudBlock">
+          <div class="hudTitle">🌍 语言</div>
+          <div class="language-grid" role="tablist" aria-label="Language">
+            <div class="language-item selected" data-language="zh" onclick="selectLanguage(this)" role="tab" aria-selected="true">
+              <span class="flag">🇨🇳</span><div class="language-name">中文</div>
+            </div>
+            <div class="language-item" data-language="en" onclick="selectLanguage(this)" role="tab" aria-selected="false">
+              <span class="flag">🇺🇸</span><div class="language-name">English</div>
+            </div>
+            <div class="language-item" data-language="ja" onclick="selectLanguage(this)" role="tab" aria-selected="false">
+              <span class="flag">🇯🇵</span><div class="language-name">日本語</div>
+            </div>
+            <div class="language-item" data-language="ko" onclick="selectLanguage(this)" role="tab" aria-selected="false">
+              <span class="flag">🇰🇷</span><div class="language-name">한국어</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hudBlock">
+          <div class="hudTitle">
+            🎒 背包
+            <span class="bagIcon" id="bagIcon" aria-hidden="true">🧧</span>
+          </div>
+          <div class="bagPills" id="bagPills"></div>
+        </div>
+
+        <div class="hudBlock hudBlockAction">
+          <button id="generateButton" class="primaryBtn" onclick="generateBlessing()">
+            <span class="btnL">🧧</span>
+            <span class="btnText">生成祝福</span>
+            <span class="btnR">🎊</span>
+          </button>
+          <div class="tinyHint">快捷键：Ctrl + Enter</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 输出区 -->
+    <section class="output">
+      <div class="outputHead">
+        <div class="dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="outTitle">祝福输出</div>
+      </div>
+      <div id="modelOutput" class="outputBody">🧧 去场景里捡一些春节元素，然后点击生成按钮获取专属祝福语... ✨</div>
+    </section>
+  </div>
+
+  <script src="./springFestival/main.js"></script>
+  <script src="./springFestival/overlay.js"></script>
 </body>
 </html>
